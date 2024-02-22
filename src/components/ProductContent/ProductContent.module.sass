@@ -1,0 +1,39 @@
+.transitionsClassNormal
+    animation: 1s ease-in-out both transicionNormal
+.transitionsClassImpar
+    animation: 1s ease-in-out both transicionImpar
+
+.LayoutContent
+    article
+        @media screen and ( min-width: 1025px  )
+            &:first-child
+                order: 2
+            &:last-child
+                order: 1
+.Content
+    &:nth-child(even)
+        flex-direction: row-reverse
+    img
+        width: 110px
+        height: auto
+
+.CamaHospitalaria
+    flex-direction: column-reverse
+    div
+        display: flex
+        img
+            margin: auto
+            width: 50%
+            height: auto
+            aspect-ratio: 400/207
+
+@keyframes transicionNormal
+    from
+        transform: translateX(-50vw)
+    to
+        transform: translateX(0)
+@keyframes transicionImpar
+    from
+        transform: translateX(50vw)
+    to
+        transform: translateX(0)

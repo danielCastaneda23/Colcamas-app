@@ -1,0 +1,166 @@
+// ! Breakpoints
+$breakpoint-phone: 320px
+$breakpoint-tablet: 600px
+$breakpoint-desktop: 1025px
+$breakpoints: ("": 0px, "-phone": $breakpoint-phone, "-tablet": $breakpoint-tablet, "-desktop": $breakpoint-desktop)
+
+//fonts
+// $font-sizes: 10, 12, 14, 16, 18, 20, 24, 32, 40, 48, 56
+
+// ! Display options and flexing
+$display-options: flex, block, none, grid
+$flex-directions: row, row-reverse, column, column-reverse
+$fg-justify: flex-start, flex-end, center, space-between, space-around,end
+$fg-aling: flex-start, start, end, flex-end, center, stretch
+$fg-text-align: center, end, left, right, justify
+$flex-wrap: wrap, nowrap, wrap-reverse
+
+@for $i from 0 through 20 //! Sizing
+  .h-#{5 * $i}
+    height: #{5% * $i}
+
+  .w-#{5 * $i}
+    width: #{5% * $i}
+
+.col //! Columns with Media Queries
+  @for $desktop-col from 1 through 12
+    @for $tablet-col from 1 through 8
+      @for $phone-col from 1 through 4
+        &-#{$desktop-col}-#{$tablet-col}-#{$phone-col}
+          grid-column: auto / span #{$phone-col}
+          @media (min-width: $breakpoint-tablet)
+            grid-column: auto / span #{$tablet-col}
+
+            @media (min-width: $breakpoint-desktop)
+              grid-column: auto / span #{$desktop-col}
+
+@each $breakpoint-name, $breakpoint in $breakpoints // ! Margin and Paddings
+  @media (min-width: $breakpoint)
+    @for $i from -1 through 13
+      $value: #{$i * 4}px
+      @if $i == -1
+        $value: auto
+        $i: "auto"
+
+      .m
+        &-#{$i}
+          margin: $value !important
+
+        &t#{$breakpoint-name}-#{$i}
+          margin-top: $value !important
+
+        &b#{$breakpoint-name}-#{$i}
+          margin-bottom: $value !important
+
+        &l#{$breakpoint-name}-#{$i}
+          margin-left: $value !important
+
+        &r#{$breakpoint-name}-#{$i}
+          margin-right: $value !important
+
+        &x#{$breakpoint-name}-#{$i}
+          margin-left: $value !important
+          margin-right: $value !important
+
+        &y#{$breakpoint-name}-#{$i}
+          margin-top: $value !important
+          margin-bottom: $value !important
+
+      .p
+        &-#{$i}
+          padding: $value !important
+
+        &t#{$breakpoint-name}-#{$i}
+          padding-top: $value !important
+
+        &b#{$breakpoint-name}-#{$i}
+          padding-bottom: $value !important
+
+        &l#{$breakpoint-name}-#{$i}
+          padding-left: $value !important
+
+        &r#{$breakpoint-name}-#{$i}
+          padding-right: $value !important
+
+        &x#{$breakpoint-name}-#{$i}
+          padding-left: $value !important
+          padding-right: $value !important
+
+        &y#{$breakpoint-name}-#{$i}
+          padding-top: $value !important
+          padding-bottom: $value !important
+
+@each $breakpoint-name, $breakpoint in $breakpoints // !Justify, Align, and Wrap Classes
+  @media (min-width: $breakpoint)
+    .d#{$breakpoint-name}
+      @each $display-type in $display-options
+        &-#{$display-type}
+          display: #{$display-type} !important
+
+    .fd#{$breakpoint-name}
+      @each $direction in $flex-directions
+        &-#{$direction}
+          flex-direction: #{$direction} !important
+
+    .text
+      @each $align in $fg-text-align
+        &#{$breakpoint-name}-#{$align}
+          text-align: #{$align}
+
+    .j
+      @each $justify in $fg-justify
+        &c#{$breakpoint-name}-#{$justify}
+          justify-content: #{$justify} !important
+        &s#{$breakpoint-name}-#{$justify}
+          justify-self: #{$justify} !important
+
+    .a
+      @each $aling in $fg-aling
+        &i#{$breakpoint-name}-#{$aling}
+          align-items: #{$aling} !important
+
+        &c#{$breakpoint-name}-#{$aling}
+          align-content: #{$aling} !important
+
+        &s#{$breakpoint-name}-#{$aling}
+          align-self: #{$aling} !important
+
+    .fw#{$breakpoint-name}
+      @each $wrap in $flex-wrap
+        &-#{$wrap}
+          justify-content: #{$wrap} !important
+
+.container //! Container and Row with MediaQueries
+  padding-left: 16px
+  padding-right: 16px
+  max-width: 100%
+  box-sizing: border-box !important
+
+.row
+  display: grid
+  grid-template-columns: repeat(4, minmax(0, 1fr))
+  grid-column-gap: 16px
+
+@media (min-width: $breakpoint-tablet)
+  .container
+    padding-left: 72px
+    padding-right: 72px
+    @media (min-width: 768px)
+      padding-left: calc(50% - 384px + 72px)
+      padding-right: calc(50% - 384px + 72px)
+
+  .row
+    grid-column-gap: 24px
+    grid-template-columns: repeat(8, minmax(0, 1fr))
+
+@media (min-width: $breakpoint-desktop)
+  .container
+    padding-left: 56px
+    padding-right: 56px
+    @media (min-width: 1280px)
+      padding-left: calc(50% - 640px + 56px)
+      padding-right: calc(50% - 640px + 56px)
+
+  .row
+    grid-column-gap: 32px
+    grid-template-columns: repeat(12, minmax(0, 1fr))

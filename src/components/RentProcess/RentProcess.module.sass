@@ -1,0 +1,51 @@
+.Card
+    position: relative
+    article
+        position: relative
+        justify-content: start
+
+        &:nth-child(odd)
+            justify-content: end
+            view-timeline-name: --card-reverse
+            view-timeline-axis: block
+
+            animation-timeline: --card-reverse
+            animation-name: scroll-animation-reverse
+
+            animation-range: entry 20% cover 50%
+            animation-fill-mode: both
+        &:nth-child(even)
+            view-timeline-name: --card
+            view-timeline-axis: block
+
+            animation-timeline: --card
+            animation-name: scroll-animation
+
+            animation-range: entry 20% cover 50%
+            animation-fill-mode: both
+
+
+.ImgBackground
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: auto
+    aspect-ratio: 1920/1707
+    display: none
+    @media screen and (min-width: 1025px )
+        display: flex
+
+
+
+@keyframes scroll-animation
+    from
+        transform: translate(-50vw)
+    to
+        transform: translate(0)
+
+@keyframes scroll-animation-reverse
+    from
+        transform: translate(50vw)
+    to
+        transform: translate(0)
